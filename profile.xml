@@ -1,0 +1,120 @@
+﻿<Profile>
+<Name>Greeds Domain</Name>
+<KillMonsters>True</KillMonsters>
+<PickupLoot>True</PickupLoot>
+<GameParams act="OpenWorld" resumeFromSave="False" isPrivate="True" numGames="-1" />
+
+<TargetBlacklists>
+	<TargetBlacklist actorId="114622" name="Tyrael" />
+	<TargetBlacklist actorId="4153" />
+	<TargetBlacklist actorId="365097" /> <!-- cursed chest -->
+	<TargetBlacklist actorId="368169" /> <!-- cursed shrine -->
+</TargetBlacklists>
+
+	<Order>
+		<ToggleTargeting questId="1" combat="True" looting="False" lootRadius="10" killRadius="15" />
+
+    <If condition="CurrentWorldId != 379962 and 
+           ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 200)">
+
+      <WaitTimer questId="1" stepId="1" waitTime="5000"/>      
+      <MoveTo questId="1" actorId="393030" pathPrecision="5"/>
+      <WaitTimer questId="1" stepId="1" waitTime="500"/>
+      <UseObject questId="1" actorId="393030" isPortal="True" destinationWorldId="379962"/>
+      <WaitTimer questId="1" stepId="1" waitTime="5000"/>
+      
+    </If>
+
+    <While condition="CurrentWorldId == 379962">
+      <ToggleTargeting questId="1" combat="True" looting="True" lootRadius="100" killRadius="80" />
+    
+      <WaitTimer questId="1" stepId="1" waitTime="60000"/> <!-- Testing -->
+      
+      <SafeMoveTo questId="312429" stepId="2" x="670" y="444" z="18" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="670" y="468" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="670" y="496" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="642" y="485" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="610" y="495" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="623" y="459" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="595" y="450" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="565" y="459" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="539" y="463" z="17" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <UseObject questId="1" actorId="392094"/>
+      <WaitTimer questId="1" stepId="1" waitTime="1500"/>
+      
+      <SafeMoveTo questId="312429" stepId="2" x="519" y="463" z="20" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="493" y="461" z="15" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="476" y="446" z="15" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="456" y="446" z="20" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="449" y="468" z="20" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="431" y="456" z="20" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="440" y="436" z="20" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="423" y="417" z="26" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="421" y="393" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="448" y="390" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="447" y="376" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="432" y="366" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <UseObject questId="1" actorId="392094"/>
+      <WaitTimer questId="1" stepId="1" waitTime="1500"/>
+      
+      <SafeMoveTo questId="312429" stepId="2" x="348" y="377" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="330" y="354" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="328" y="311" z="35" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="309" y="260" z="17" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="315" y="223" z="-2" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="340" y="212" z="-7" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="345" y="186" z="-7" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="343" y="154" z="-7" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="320" y="156" z="-15" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="297" y="165" z="-30" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="268" y="154" z="-41" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="246" y="158" z="-55" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="224" y="170" z="-73" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="210" y="182" z="-81" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <UseObject questId="1" actorId="389569"/>
+      <WaitTimer questId="1" stepId="1" waitTime="2500"/>
+      
+      <UseObject questId="1" actorId="380766"/>
+      <WaitTimer questId="1" stepId="1" waitTime="2500"/>
+      
+    </While>
+
+    <While condition="CurrentWorldId == 380753 and not ActorExistsAt(403683, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 200)">
+      
+      <SafeMoveTo questId="312429" stepId="2" x="160" y="165" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="117" y="153" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="88" y="161" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      <SafeMoveTo questId="312429" stepId="2" x="72" y="174" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <UseObject questId="1" actorId="403041"/>
+      
+      <SafeMoveTo questId="312429" stepId="2" x="89" y="161" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <!--  takes awhile for greed to be attackable  -->
+      <WaitTimer questId="1" stepId="1" waitTime="6000"/>
+      <!--  boss fight  -->
+      
+    </While>
+    
+    <While condition="ActorExistsAt(403683, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 200)">
+      
+      <!--  open the chest  -->
+      <!--  bot gets stuck if standing on either side of the chest, so move around  -->
+      
+      <SafeMoveTo questId="312429" stepId="2" x="182" y="234" z="-82" pathPrecision="5" pathPointLimit="250" statusText=""/>
+      
+      <UseObject questId="1" InteractRange="100" actorId="403683"/>
+      <UseObject questId="1" InteractRange="100" actorId="403683"/>
+      <UseObject questId="1" InteractRange="100" actorId="403683"/>
+      
+      <WaitTimer questId="1" stepId="1" waitTime="60000"/>
+      <!--  wait for plugin to reload last profile and continue  -->
+    </While>
+    
+    <ReloadProfile />
+    
+	</Order>
+</Profile>
