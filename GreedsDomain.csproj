@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="GreedEvents.cs" />
     <Compile Include="GreedsDomain.cs" />
+    <Compile Include="GreedWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

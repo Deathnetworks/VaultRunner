@@ -79,10 +79,9 @@ namespace GreedsDomain
             return other.Name == Name;
         }
 
-
         public Window DisplayWindow
         {
-            get { throw new NotImplementedException(); }
+            get { return GreedWindow.GetDisplay(); }
         }
     }
 }
