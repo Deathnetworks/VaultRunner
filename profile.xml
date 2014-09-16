@@ -15,7 +15,7 @@
 		<ToggleTargeting questId="1" combat="True" looting="False" lootRadius="10" killRadius="15" />
 
     <If condition="CurrentWorldId != 379962 and 
-           ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 200)">
+           ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 75)">
 
       <WaitTimer questId="1" stepId="1" waitTime="5000"/>      
       <MoveTo questId="1" actorId="393030" pathPrecision="5"/>
@@ -26,9 +26,7 @@
     </If>
 
     <While condition="CurrentWorldId == 379962">
-      <ToggleTargeting questId="1" combat="True" looting="True" lootRadius="100" killRadius="80" />
-    
-      <WaitTimer questId="1" stepId="1" waitTime="60000"/> <!-- Testing -->
+      <ToggleTargeting questId="1" combat="True" looting="True" lootRadius="50" killRadius="15" />
       
       <SafeMoveTo questId="312429" stepId="2" x="670" y="444" z="18" pathPrecision="5" pathPointLimit="250" statusText=""/>
       <SafeMoveTo questId="312429" stepId="2" x="670" y="468" z="10" pathPrecision="5" pathPointLimit="250" statusText=""/>
