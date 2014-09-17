@@ -81,7 +81,8 @@ namespace GreedsDomain
 
         public Window DisplayWindow
         {
-            get { return GreedWindow.GetDisplay(); }
+            //get { return GreedWindow.GetDisplay(); }
+            get { return null; }
         }
     }
 }
