@@ -42,7 +42,7 @@ namespace GreedsDomain
         {
             eventHandler = new GreedEvents();
             Logger.Log("Plugin - Enabled");
-            GameEvents.OnGameJoined += GameEvents_OnGameJoined;
+            GameEvents.OnGameJoined += GameEvents_OnGameJoined;            
         }
 
         void GameEvents_OnGameJoined(object sender, EventArgs e)
@@ -57,10 +57,42 @@ namespace GreedsDomain
             if (ZetaDia.Me == null)
                 return;
 
-            if (!ZetaDia.IsInGame || !ZetaDia.Me.IsValid || ZetaDia.IsLoadingWorld || ZetaDia.IsPlayingCutscene)
+            if (!ZetaDia.IsInGame || !ZetaDia.Me.IsValid || ZetaDia.IsLoadingWorld || ZetaDia.IsPlayingCutscene || ZetaDia.WorldType != Act.OpenWorld)
                 return;
+
+            if (eventHandler == null)
+                eventHandler = new GreedEvents();
             
-            eventHandler.PortalCheck();
+            switch (eventHandler.state)
+            {
+                case GreedState.LookingForPortal:
+                    {
+                        eventHandler.state = eventHandler.FindPortal();
+                        return;
+                    }
+                case GreedState.FoundPortal:
+                    {
+                        eventHandler.state = eventHandler.FoundPortal();
+                        return;
+                    }
+                case GreedState.InsidePortal:
+                    {
+                        eventHandler.state = eventHandler.InsidePortal();
+                        return;
+                    }
+                case GreedState.InBossArea:
+                    {
+                        eventHandler.state = eventHandler.InsideBossArea();
+                        return;
+                    }
+                case GreedState.BossDead:
+                    {
+                        eventHandler.state = eventHandler.BossDead();
+                        return;
+                    }
+                default:
+                        return;
+            }
         }
 
         public void OnShutdown()
