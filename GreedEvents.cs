@@ -8,27 +8,25 @@ using Zeta.Bot.Profile;
 using Zeta.Common;
 using Zeta.Game;
 using Zeta.Game.Internals.Actors;
+using Trinity;
 
-namespace GreedsDomain
+namespace VaultRunner
 {
     public class GreedEvents
     {
         private static readonly int _GreedPortalSNO = 393030;
         private static readonly int _GreedChestSNO = 403683;
-        private static string _GreedProfile = System.Environment.CurrentDirectory + "\\Plugins\\GreedsDomain\\profile.xml";
+        private static string _GreedProfile = string.Format("{0}\\Plugins\\{1}\\profile.xml", System.Environment.CurrentDirectory, "VaultRunner");
+        private static string _GreedProfileBackUp = string.Format("{0}\\Plugins\\{1}\\profile.xml", System.Environment.CurrentDirectory, "GreedsDomain");
         private Profile _currentProfile;
         private Stopwatch _greedChestTimer = null;
-        private List<DiaGizmo> _destructables = new List<DiaGizmo>();
-        private Vector3 _previousPosition;
-        private bool _positionSet = false;
-        private DefaultNavigationProvider satNav = Navigator.GetNavigationProviderAs<DefaultNavigationProvider>();
+        private Trinity.Config.Combat.DestructibleIgnoreOption _previousOption;
 
         public GreedState state = GreedState.LookingForPortal;
 
         public GreedEvents()
         {
             state = GreedState.LookingForPortal;
-            _destructables = new List<DiaGizmo>();
             _greedChestTimer = null;
         }
 
@@ -55,12 +53,15 @@ namespace GreedsDomain
 
         public GreedState FoundPortal()
         {
-            if (ProfileManager.CurrentProfile.Path != _GreedProfile)
+            if (ProfileManager.CurrentProfile.Path != _GreedProfile || ProfileManager.CurrentProfile.Path != _GreedProfileBackUp)
             {
                 Logger.Log("Loading Greed Profile - " + DateTime.Now.ToString());
 
                 _currentProfile = ProfileManager.CurrentProfile;
                 LoadProfile(_GreedProfile, true, 1);
+
+                if (ProfileManager.CurrentProfile.Path != _GreedProfile)
+                    LoadProfile(_GreedProfileBackUp, true, 1);
             }
 
             if (ZetaDia.CurrentWorldId != 379962 && ZetaDia.CurrentWorldId != 380753)
@@ -90,58 +91,10 @@ namespace GreedsDomain
             if (ZetaDia.CurrentWorldId != 379962)
                 return ConfirmWorld();
 
-            if (!_positionSet)
-                _previousPosition = ZetaDia.Me.Position;
-
-            if (_destructables.Count == 0 || ZetaDia.Me.Position.Distance2D(_previousPosition) > 35)
+            if (Trinity.Trinity.Settings.WorldObject.DestructibleOption != Trinity.Config.Combat.DestructibleIgnoreOption.DestroyAll)
             {
-                List<DiaGizmo> currentList = ZetaDia.Actors.RActorList.OfType<DiaGizmo>()
-                     .Where(x => x.IsDestructibleObject) //Fuck it - Destroy anything and everything in here!
-                     .ToList<DiaGizmo>();
-
-                foreach (DiaGizmo obj in currentList)
-                {
-                    if (!_destructables.Contains(obj))
-                        _destructables.Add(obj);
-                }
-
-                //re-order based on distance away
-
-                _destructables.OrderBy(x => ZetaDia.Me.Position.Distance2D(x.Position));
-
-                //Reset current position
-                if (ZetaDia.Me.Position.Distance2D(_previousPosition) > 35)
-                    _previousPosition = ZetaDia.Me.Position;
-            }                       
-
-            if (!ZetaDia.Me.IsInCombat && _destructables.Count > 0)
-            {
-                bool allDestroyed = true;
-                for (int i = 0; i < _destructables.Count; i++)
-                {
-                    if (ZetaDia.Actors.RActorList.OfType<DiaGizmo>().Contains(_destructables[i]))
-                    {
-                        allDestroyed = false;
-                        while (!(ZetaDia.Me.Position.Distance2D(_destructables[i].Position) < DefaultWeaponDistance) && !_destructables[i].InLineOfSight 
-                            && !ZetaDia.Me.IsInCombat)
-                        {
-                            satNav.MoveTo(_destructables[i].Position, null, true);
-
-                            PauseBot(0, 500);
-                        }
-
-                        if ((ZetaDia.Me.Position.Distance2D(_destructables[i].Position) < DefaultWeaponDistance) && _destructables[i].InLineOfSight)
-                        {
-                            ZetaDia.Me.UsePower(DefaultWeaponPower, _destructables[i].Position, -1, _destructables[i].ACDGuid);
-                            PauseBot(0, 300);
-                        }
-
-                        break;
-                    }
-                }
-
-                if (allDestroyed)
-                    _destructables.Clear();
+                _previousOption = Trinity.Trinity.Settings.WorldObject.DestructibleOption;
+                Trinity.Trinity.Settings.WorldObject.DestructibleOption = Trinity.Config.Combat.DestructibleIgnoreOption.DestroyAll;
             }
 
             return ConfirmWorld();
@@ -149,6 +102,10 @@ namespace GreedsDomain
 
         public GreedState InsideBossArea()
         {
+            if (Trinity.Trinity.Settings.WorldObject.DestructibleOption == Trinity.Config.Combat.DestructibleIgnoreOption.DestroyAll &&
+                _previousOption != Trinity.Config.Combat.DestructibleIgnoreOption.DestroyAll)
+                Trinity.Trinity.Settings.WorldObject.DestructibleOption = _previousOption;
+
             if (ZetaDia.CurrentWorldId == 380753)
             {
                 DiaObject chestObject = ZetaDia.Actors.RActorList.OfType<DiaObject>().FirstOrDefault(r => r.ActorSNO == _GreedChestSNO);
@@ -274,62 +231,6 @@ namespace GreedsDomain
             else
                 BotMain.PauseFor(TimeSpan.FromMilliseconds(milliseconds));
         }
-
-        #region OldCode
-
-        //public void PortalCheck()
-        //{
-        //    if (!_portalFound)
-        //    {
-        //        DiaObject portalObject = ZetaDia.Actors.RActorList.OfType<DiaObject>().FirstOrDefault(r => r.ActorSNO == _GreedPortalSNO);
-
-        //        if (portalObject != null)
-        //        {
-        //            Navigator.MoveTo(portalObject.Position);
-
-        //            _portalFound = true;
-
-        //            Logger.Log("Found Goblin Portal - " + DateTime.Now.ToString());
-
-        //            Logger.Log("Loading Greed Profile - " + DateTime.Now.ToString());
-
-        //            PauseBot(5);
-
-        //            _currentProfile = ProfileManager.CurrentProfile;
-
-        //            ProfileManager.Load(_GreedProfile);
-
-        //            _greedloaded = true;
-
-        //        }
-        //    }
-
-        //    if (_greedloaded && !_greedcomplete && ZetaDia.CurrentWorldId == 380753)
-        //    {
-        //        DiaObject chestObject = ZetaDia.Actors.RActorList.OfType<DiaObject>().FirstOrDefault(r => r.ActorSNO == _GreedChestSNO);
-
-        //        if (chestObject != null)
-        //        {
-        //            if (_greedChestTimer == null)
-        //            {
-        //                _greedChestTimer = new Stopwatch();
-        //                _greedChestTimer.Start();
-        //            }
-        //            else if (_greedChestTimer.Elapsed.Seconds > 20)
-        //            {
-        //                ProfileManager.Load(_currentProfile.Path);
-        //                PauseBot(15);
-
-        //                _greedcomplete = true;
-
-        //                _greedChestTimer.Stop();
-        //                _greedChestTimer = null;
-        //            }
-        //        }
-        //    }
-        //}
-
-        #endregion OldCode
     }
 
     public static class Logger

@@ -14,7 +14,7 @@ using Zeta.Game.Internals.Actors;
 using Zeta.Common.Xml;
 using Zeta.XmlEngine;
 
-namespace GreedsDomain
+namespace VaultRunner
 {
     public class GreedWindow
     {

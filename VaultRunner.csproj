@@ -6,8 +6,8 @@
     <ProjectGuid>{11EA9EAF-4475-4809-A248-98330349E96C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GreedsDomain</RootNamespace>
-    <AssemblyName>GreedsDomain</AssemblyName>
+    <RootNamespace>VaultRunner</RootNamespace>
+    <AssemblyName>VaultRunner</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -55,6 +55,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Trinity_635475793048204271">
+      <HintPath>..\..\RoS-BoT Beta\DemonBuddy\CompiledAssemblies\Trinity_635475793048204271.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>

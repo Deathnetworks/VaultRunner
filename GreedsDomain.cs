@@ -10,7 +10,7 @@ using Zeta.Common;
 using Zeta.Common.Plugins;
 using Zeta.Game;
 
-namespace GreedsDomain
+namespace VaultRunner
 {
     public class GreedsDomain : IPlugin
     {
