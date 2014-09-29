@@ -243,7 +243,7 @@ namespace VaultRunner
             var method = frame.GetMethod();
             var type = method.DeclaringType;
 
-            Logging.InfoFormat("[Greeds Domain] => " + string.Format(message, args), type.Name);
+            Logging.InfoFormat("[VaultRunner - Greeds Domain] => " + string.Format(message, args), type.Name);
         }
 
         public static void Log(string message)

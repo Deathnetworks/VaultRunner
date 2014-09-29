@@ -28,7 +28,7 @@ namespace VaultRunner
 
         public string Name
         {
-            get { return "Greeds Domain"; }
+            get { return "Vault Runner"; }
         }
 
         public void OnDisabled()
