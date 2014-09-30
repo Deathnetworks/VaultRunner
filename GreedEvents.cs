@@ -56,7 +56,7 @@ namespace VaultRunner
             {
                 Logger.Log("Loading Greed Profile - " + DateTime.Now.ToString());
 
-                _currentProfile = ProfileManager.CurrentProfile;
+                    _currentProfile = ProfileManager.CurrentProfile;
 
                 LoadProfile(_GreedProfile, true, 1);
 
@@ -112,7 +112,8 @@ namespace VaultRunner
 
                 if (chestObject != null)
                 {
-                    Logger.Log("Boss is dead -> Loot");
+                    Logger.Log("Boss is dead");
+
                     return GreedState.BossDead;
                 }
             }
@@ -135,13 +136,13 @@ namespace VaultRunner
                 {
                     Logger.Log("Previous profile cannot be loaded. Stopping DB.");
                     BotMain.CurrentBot.Stop();
-                    BotMain.Stop();                    
+                    BotMain.Stop();
                 }
 
                 return GreedState.Done;
             }
 
-            return ConfirmWorld();
+            return GreedState.BossDead;
         }
 
         private GreedState ConfirmWorld()
@@ -154,72 +155,6 @@ namespace VaultRunner
                     return GreedState.InBossArea;
                 default:
                     return state;
-            }
-        }
-
-        /// <summary>
-        /// Borrowed From Trinity 2, 1, 21
-        /// Gets the default weapon power based on the current equipped primary weapon
-        /// </summary>
-        /// <returns></returns>
-        private SNOPower DefaultWeaponPower
-        {
-            get
-            {
-                ACDItem lhItem = ZetaDia.Me.Inventory.Equipped.FirstOrDefault(i => i.InventorySlot == InventorySlot.LeftHand);
-                if (lhItem == null)
-                    return SNOPower.None;
-
-                switch (lhItem.ItemType)
-                {
-                    default:
-                        return SNOPower.Weapon_Melee_Instant;
-
-                    case ItemType.Axe:
-                    case ItemType.CeremonialDagger:
-                    case ItemType.Dagger:
-                    case ItemType.Daibo:
-                    case ItemType.FistWeapon:
-                    case ItemType.Mace:
-                    case ItemType.Polearm:
-                    case ItemType.Spear:
-                    case ItemType.Staff:
-                    case ItemType.Sword:
-                    case ItemType.MightyWeapon:
-                        return SNOPower.Weapon_Melee_Instant;
-
-                    case ItemType.Wand:
-                        return SNOPower.Weapon_Ranged_Wand;
-
-                    case ItemType.Bow:
-                    case ItemType.Crossbow:
-                    case ItemType.HandCrossbow:
-                        return SNOPower.Weapon_Ranged_Projectile;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Borrowed From Trinity 2, 1, 21
-        /// Gets the default weapon distance based on the current equipped primary weapon
-        /// </summary>
-        /// <returns></returns>
-        private float DefaultWeaponDistance
-        {
-            get
-            {
-                switch (DefaultWeaponPower)
-                {
-                    case SNOPower.Weapon_Ranged_Instant:
-                    case SNOPower.Weapon_Ranged_Projectile:
-                        return 65f;
-
-                    case SNOPower.Weapon_Ranged_Wand:
-                        return 55f;
-
-                    default:
-                        return 10f;
-                }
             }
         }
 
