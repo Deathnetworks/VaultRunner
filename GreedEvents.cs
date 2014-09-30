@@ -56,7 +56,7 @@ namespace VaultRunner
             {
                 Logger.Log("Loading Greed Profile - " + DateTime.Now.ToString());
 
-                    _currentProfile = ProfileManager.CurrentProfile;
+                _currentProfile = ProfileManager.CurrentProfile;
 
                 LoadProfile(_GreedProfile, true, 1);
 
