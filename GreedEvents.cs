@@ -9,6 +9,7 @@ using Zeta.Common;
 using Zeta.Game;
 using Zeta.Game.Internals.Actors;
 using Trinity;
+using System.Threading;
 
 namespace VaultRunner
 {
@@ -19,7 +20,6 @@ namespace VaultRunner
         private static string _GreedProfile = string.Format("{0}\\Plugins\\{1}\\profile.xml", System.Environment.CurrentDirectory, "VaultRunner");
         private static string _GreedProfileBackUp = string.Format("{0}\\Plugins\\{1}\\profile.xml", System.Environment.CurrentDirectory, "GreedsDomain");
         private Profile _currentProfile;
-        private Stopwatch _greedChestTimer = null;
         private Trinity.Config.Combat.DestructibleIgnoreOption _previousOption;
 
         public GreedState state = GreedState.LookingForPortal;
@@ -27,7 +27,6 @@ namespace VaultRunner
         public GreedEvents()
         {
             state = GreedState.LookingForPortal;
-            _greedChestTimer = null;
         }
 
         public GreedState FindPortal()
@@ -123,19 +122,21 @@ namespace VaultRunner
 
         public GreedState BossDead()
         {
-            if (_greedChestTimer == null)
+            if (ZetaDia.IsInTown)
             {
-                _greedChestTimer = new Stopwatch();
-                _greedChestTimer.Start();
-            }
-            else if (_greedChestTimer.Elapsed.Seconds > 20)
-            {
-                _greedChestTimer.Stop();
-                _greedChestTimer = null;
+                if (_currentProfile.Path == _GreedProfile || _currentProfile.Path == _GreedProfileBackUp)
+                {
+                    Logger.Log("Loading previous profile: " + _currentProfile.Name);
 
-                Logger.Log("Loading previous profile: " + _currentProfile.Name);
-
-                LoadProfile(_currentProfile.Path);
+                    LoadProfile(_currentProfile.Path);
+                    Thread.Sleep(750);
+                }
+                else
+                {
+                    Logger.Log("Previous profile cannot be loaded. Stopping DB.");
+                    BotMain.CurrentBot.Stop();
+                    BotMain.Stop();                    
+                }
 
                 return GreedState.Done;
             }

@@ -14,6 +14,10 @@
 	<Order>
 		<ToggleTargeting questId="1" combat="True" looting="False" lootRadius="10" killRadius="15" />
 
+    <If condition="Me.IsInTown">
+      <WaitTimer questId="1" stepId="1" waitTime="5000"/>
+    </If>
+    
     <If condition="CurrentWorldId != 379962 and 
            ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 75)">
 
@@ -107,8 +111,8 @@
       <UseObject questId="1" InteractRange="100" actorId="403683"/>
       <UseObject questId="1" InteractRange="100" actorId="403683"/>
       <UseObject questId="1" InteractRange="100" actorId="403683"/>
-      
-      <WaitTimer questId="1" stepId="1" waitTime="60000"/>
+
+      <UseTownPortal questId="1" />
       <!--  wait for plugin to reload last profile and continue  -->
     </While>
     
