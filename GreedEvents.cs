@@ -53,11 +53,12 @@ namespace VaultRunner
 
         public GreedState FoundPortal()
         {
-            if (ProfileManager.CurrentProfile.Path != _GreedProfile || ProfileManager.CurrentProfile.Path != _GreedProfileBackUp)
+            if (ProfileManager.CurrentProfile.Path != _GreedProfile && ProfileManager.CurrentProfile.Path != _GreedProfileBackUp)
             {
                 Logger.Log("Loading Greed Profile - " + DateTime.Now.ToString());
 
                 _currentProfile = ProfileManager.CurrentProfile;
+
                 LoadProfile(_GreedProfile, true, 1);
 
                 if (ProfileManager.CurrentProfile.Path != _GreedProfile)
@@ -111,7 +112,10 @@ namespace VaultRunner
                 DiaObject chestObject = ZetaDia.Actors.RActorList.OfType<DiaObject>().FirstOrDefault(r => r.ActorSNO == _GreedChestSNO);
 
                 if (chestObject != null)
+                {
+                    Logger.Log("Boss is dead -> Loot");
                     return GreedState.BossDead;
+                }
             }
 
             return ConfirmWorld();
@@ -128,6 +132,8 @@ namespace VaultRunner
             {
                 _greedChestTimer.Stop();
                 _greedChestTimer = null;
+
+                Logger.Log("Loading previous profile: " + _currentProfile.Name);
 
                 LoadProfile(_currentProfile.Path);
 
