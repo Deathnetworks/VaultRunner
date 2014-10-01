@@ -10,6 +10,7 @@ using Zeta.Game;
 using Zeta.Game.Internals.Actors;
 using Trinity;
 using System.Threading;
+using Zeta.Bot.Logic;
 
 namespace VaultRunner
 {
@@ -123,9 +124,9 @@ namespace VaultRunner
 
         public GreedState BossDead()
         {
-            if (ZetaDia.IsInTown)
+            if (ZetaDia.IsInTown && !BrainBehavior.IsVendoring)
             {
-                if (_currentProfile.Path == _GreedProfile || _currentProfile.Path == _GreedProfileBackUp)
+                if (_currentProfile.Path != _GreedProfile && _currentProfile.Path != _GreedProfileBackUp)
                 {
                     Logger.Log("Loading previous profile: " + _currentProfile.Name);
 

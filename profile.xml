@@ -17,17 +17,12 @@
     <If condition="Me.IsInTown">
       <WaitTimer questId="1" stepId="1" waitTime="5000"/>
     </If>
-    
-    <If condition="CurrentWorldId != 379962 and 
-           ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 75)">
 
-      <WaitTimer questId="1" stepId="1" waitTime="5000"/>      
-      <MoveTo questId="1" actorId="393030" pathPrecision="5"/>
-      <WaitTimer questId="1" stepId="1" waitTime="500"/>
-      <UseObject questId="1" actorId="393030" isPortal="True" destinationWorldId="379962"/>
-      <WaitTimer questId="1" stepId="1" waitTime="5000"/>
-      
-    </If>
+    <While condition="CurrentWorldId != 379962 and 
+           ActorExistsAt(393030, ZetaDia.Me.Position.X, ZetaDia.Me.Position.Y, ZetaDia.Me.Position.Z, 250)">
+      <MoveTo questId="1" actorId="393030" pathPrecision="5" timeout="2"/> <!-- timeout added to prevent conflict between tag and plugin -->
+      <WaitTimer questId="1" stepId="1" waitTime="2000"/>
+    </While>
 
     <While condition="CurrentWorldId == 379962">
       <ToggleTargeting questId="1" combat="True" looting="True" lootRadius="50" killRadius="15" />
