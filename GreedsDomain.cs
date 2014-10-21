@@ -63,36 +63,12 @@ namespace VaultRunner
             if (eventHandler == null)
                 eventHandler = new GreedEvents();
             
-            switch (eventHandler.state)
+            if (eventHandler.state == GreedState.LookingForPortal)
             {
-                case GreedState.LookingForPortal:
-                    {
-                        eventHandler.state = eventHandler.FindPortal();
-                        return;
-                    }
-                case GreedState.FoundPortal:
-                    {
-                        eventHandler.state = eventHandler.FoundPortal();
-                        return;
-                    }
-                case GreedState.InsidePortal:
-                    {
-                        eventHandler.state = eventHandler.InsidePortal();
-                        return;
-                    }
-                case GreedState.InBossArea:
-                    {
-                        eventHandler.state = eventHandler.InsideBossArea();
-                        return;
-                    }
-                case GreedState.BossDead:
-                    {
-                        eventHandler.state = eventHandler.BossDead();
-                        return;
-                    }
-                default:
-                        return;
+                eventHandler.FindPortal();
             }
+
+            return;
         }
 
         public void OnShutdown()
@@ -113,7 +89,6 @@ namespace VaultRunner
 
         public Window DisplayWindow
         {
-            //get { return GreedWindow.GetDisplay(); }
             get { return null; }
         }
     }
