@@ -79,7 +79,7 @@ namespace VaultRunner
 
         Version IPlugin.Version
         {
-            get { return new Version(1, 0, 1); }
+            get { return new Version(1, 0, 3); }
         }
 
         public bool Equals(IPlugin other)
